@@ -1,0 +1,105 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+
+{% block title_stylesheet %}
+
+<title>{{store_name}}</title>
+<link rel="stylesheet" href="{% static 'grocery/scss/store_view.css' %}"> 
+
+{% endblock %}
+
+{% block body %}
+<header>
+    <div class="heading">
+        <h1>{{store_name}}</h1>
+        <div class="stats">
+            <p>Budget: {{budget}}</p>
+            <p>Profit: {{profit}}</p>
+        </div>
+    </div>
+    <div class="nav_buttons">
+        <a href="{% url "store_leaderboard" %}"><button><i class="fa-solid fa-ranking-star"></i> Leaderboard</button></a>
+        <a href="{% url "owner_logout" %}"><button><i class="fas fa-sign-out-alt"></i> Logout</button></a>
+        <a href="{% url "delete_store" %}"><button><i class="fas fa-trash"></i> Delete Store</button></a>
+        <a href="{% url "choose_role" %}"><button><i class="fa-solid fa-arrow-right"></i> Back</button></a>
+    </div>
+</header>
+<main>
+    <div class="heading2">
+        <h2>Current Products</h2>
+        <button class="add_btn">{% if add_menu_toggled %}CLOSE MENU{% else %}ADD NEW PRODUCT{% endif %}</button>
+        <div class="add_menu" style="display:{% if show_menu %}block{% else %}none{% endif %};">
+
+            <form action="{% url "store_view" %}" method="post">
+                {% csrf_token %}
+
+                <select name="item_chooser" class="item_chooser">
+
+                    {% for item in items_all %}
+                    <option value="{{item.cost_price}}|{{item.id}}" class="option_item">{{item.item_name}}</option> <!-- item.id is needed for django to find the item from the database when form is sent, item.cost_price will be used by js -->
+                    {% endfor %}
+
+                </select> <br>
+                <input class="quantity_field" type="number" name="quantity_field" placeholder="Quantity" min="1" max="100" value="1"> <br>
+                <input class="saleprice_field" type="number" name="saleprice_field", placeholder="SalePrice(perunit)" min="1.00" max="20.00" step="0.01" style="width: 150px;"> <br>
+                <button type="submit" value="add_product" name="submit_button">Add Product</button>
+            </form>
+
+            <p class="cost_price_display_p">CostPrice(perunit): 0.00</p>
+            <p class="cost_price_display_t">Total CostPrice: 0.00</p>
+            <p class="profit_margin_display_p">ProfitMargin(perunit): 0.00</p>
+            <p class="profit_margin_display_t">Total ProfitMargin: 0.00</p>
+            {% if error_message_ap %}
+            <p style="color:red; font-weight:bold;">{{error_message_ap}}</p>
+            {% endif %}
+        </div>
+    </div>
+    {% if error_message_table %}
+    <p style="color:red; font-weight:bold;">{{error_message_table}}</p>
+    {% endif %}
+    <div class="product_table_container">
+        <div class="product_table">
+
+            <div class="product_tr">
+                <div class="product_th">Product</div>
+                <div class="product_th">Quantity</div>
+                <div class="product_th">CostPrice</div>
+                <div class="product_th">SalePrice</div>
+            </div>
+
+            {% for product in store_products %}
+            <div class="product_tr_row">
+                <div class="edit_button_row">
+                    <button class="edit_button">EDIT</button>
+                </div>
+                <div class="product_td" id="itemname_td">{{product.item_info.item_name}}</div>
+                <div class="product_td" id="quantity_td">{{product.quantity}}</div>
+                <input class="quantity_field_increase" type="number" name="quantity_field_increase" placeholder="Add Units" min="1" max="100" value="0" >
+                <div class="product_td" id="costprice_td">{{product.item_info.cost_price}}</div>
+                <div class="product_td" id="saleprice_td">{{product.sale_price}}</div>
+                <input class="change_saleprice_field" type="number" name="change_saleprice_field" placeholder="Saleprice" min="1.00" max="20.00" value="0" step="0.01">
+            </div>
+            <div class="editing_row">
+                <button class="restock_btn">RESTOCK</button>
+                <form action="{% url "store_view" %}" method="post" class="restock_form">
+                    {% csrf_token %}
+                    <button class="restock_submit" type="submit" name="submit_button" value="add_quantity">ADD</button>
+                </form>
+                <p class="costprice_display_q">Costprice: </p>
+
+                <button class="changeprice_btn">CHANGE PRICE</button>
+                <form action="{% url "store_view" %}" method="post" class="changeprice_form">
+                    {% csrf_token %}
+                    <button class="changeprice_submit" type="submit" name="submit_button" value="add_saleprice">CHANGE</button>
+                </form>
+                
+                <a href="{% url 'delete_product' product_id=product.id %}"><button class="delete_btn">DELETE</button></a>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</main>
+
+<script src="{% static "grocery/js/store_view.js" %}"></script>
+{% endblock %}

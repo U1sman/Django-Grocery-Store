@@ -1,0 +1,22 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+{% block title_stylesheet %}
+        
+
+{% endblock %}
+{% block body %}
+    <h1>Create New Store</h1>
+    <form action="{% url "owner_signup" %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="storename" placeholder="Storename">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Create">
+    </form>
+    {% if error_message %}
+    <p>{{error_message}}</p>
+    {% endif %}
+
+    <a href="{% url "owner_login" %}">Login</a>
+    <a href="{% url "choose_role" %}">Back to Roles</a>
+
+{% endblock %}

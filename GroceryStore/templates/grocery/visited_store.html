@@ -1,0 +1,86 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+
+{% block title_stylesheet %}
+<title>{{current_store.store_name}}</title>
+<link rel="stylesheet" href="{% static 'grocery/scss/visited_store.css' %}">
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1>currently visiting: {{current_store.store_name}}</h1>
+    <div class="nav_buttons">
+        <button class="review_button"><i class="fa-regular fa-comment"></i> Review</button>
+        <a href="{% url "choose_role" %}"><button><i class="fas fa-sign-out-alt"></i> Exit</button></a>
+        <a href="{% url "browse_stores" %}"><button><i class="fa-solid fa-globe"></i> Browse Stores</button></a>
+    </div>
+    <div class="review_box">
+        <h2>How was your experience</h2>
+        <form action="{% url "visited_store" store_id=current_store.id %}" class="review_form" method="post">
+            {% csrf_token %}
+            <select name="select_review" id="select_review">
+                <option value="very_good" class="review_option">Very Good</option>
+                <option value="good" class="review_option">Good</option>
+                <option value="bad" class="review_option">Bad</option>
+                <option value="very_bad" class="review_option">Very Bad</option>
+                <option value="terrible" class="review_option">Terrible</option>
+            </select>
+            <button class="submit" type="submit" value="submit_review" name="submit_button">Submit</button>
+        </form>
+        {% if messages %}
+            {% for message in messages %}
+                {% if "review_feedback_message" in message.tags %}
+                    <p>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+        {% endif %}
+    </div>
+</header>
+<br>
+<br>
+<main>
+    <h2>Current Products</h2>
+    {% if error_message_q %}
+    <p style="color:red;">{{error_message_q}}</p>
+    {% elif messages %}
+    {% for message in messages %}
+                {% if "item_bought_message" in message.tags %}
+                    <p>{{message}}</p>
+                {% endif %}
+            {% endfor %}
+    {% endif %}
+    <div class="product_table_container">
+        <div class="product_table">
+
+            <div class="product_tr">
+                <div class="product_th">Product</div>
+                <div class="product_th">Quantity</div>
+                <div class="product_th">Price(perunit)</div>
+            </div>
+
+            {% for product in store_products %}
+            <div class="product_tr_row">
+                <div class="buy_button_row">
+                    <button class="buy_button_toggle">BUY</button>
+                </div>
+                <div class="product_td" id="itemname_td">{{product.item_info.item_name}}</div>
+                <div class="product_td" id="quantity_td">{{product.quantity}}</div>
+                <div class="product_td" id="saleprice_td">{{product.sale_price}}</div>
+            </div>
+            <div class="buying_row">   
+                <form action="{% url "visited_store" store_id=current_store.id %}" method="post" class="buying_form">
+                    {% csrf_token %}
+                    <input type="hidden" name="product_id" value="{{ product.id }}"> <!-- Hidden input for product ID, to identify which product is being bought -->
+                    <input class="quantity_field_buy" type="number" name="quantity_field_buy" placeholder="Quantity" min="1" max="100" value="0">
+                    <button class="buy_button" type="submit" value="submit_buy" name="submit_button">BUY</button>
+                </form>
+                <p class="cost_displayer">Cost: </p>
+            </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</main>
+
+<script src="{% static "grocery/js/visited_store.js" %}"></script>
+{% endblock %} 

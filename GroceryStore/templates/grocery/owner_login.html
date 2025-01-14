@@ -1,0 +1,28 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+{% block title_stylesheet %}
+        
+
+{% endblock %}
+{% block body %}
+    <h1>WELCOME BACK</h1>
+    <form action="{% url "owner_login" %}" method="post">
+        {% csrf_token %}
+        <input type="text" name="storename" placeholder="Storename">
+        <input type="password" name="password" placeholder="Password">
+        <input type="submit" value="Login">
+    </form>
+    {% if error_message %}
+    <p>{{error_message}}</p>
+    {% endif %}
+    {% if messages %}
+        {% for message in messages %}
+            {% if message.tags == "success" %}
+                <p class="success">{{ message }}</p>
+            {% endif %}
+        {% endfor %}
+    {% endif %}
+
+    <a href="{% url "owner_signup" %}">Create New Store</a>
+    <a href="{% url "choose_role" %}">Back to Roles</a>
+{% endblock %} 

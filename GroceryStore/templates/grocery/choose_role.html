@@ -1,0 +1,16 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+
+{% block title_stylesheet %}
+    <title>Choose A Role</title>
+    <link rel="stylesheet" href="{% static 'grocery/scss/choose_role.css' %}">
+{% endblock %}
+
+{% block body %}
+    <h1>CHOOSE A ROLE</h1>
+    <div class="button_container">
+        <a href="{% url "store_view" %}" ><button name="owner" style="margin-right: 50px;">OWNER</button></a>
+        <a href="{% url "browse_stores" %}"><button name="customer">CUSTOMER</button></a>
+    </div>
+
+{% endblock %}

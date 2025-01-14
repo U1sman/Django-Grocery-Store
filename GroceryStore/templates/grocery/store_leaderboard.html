@@ -1,0 +1,59 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+
+{% block title_stylesheet %}
+
+    <title>Store Leaderboard</title>
+    <link rel="stylesheet" href="#">
+
+{% endblock %}
+
+{% block body %}
+    <header>
+        <h1>STORE LEADERBOARD</h1>
+        <a href="{% url "store_view" %}"><button><i class="fa-solid fa-arrow-left"></i> Back to Store</button></a>
+
+    </header>
+    <main>
+        <div class="rank_b">
+            <h2>Top 100 in Budget</h2>
+            <p>Stores are ranked on the basis of budget, the higher the budget the better rank</p>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>StoreName</th>
+                    <th>Budget</th>
+                </tr>
+                {% comment %} ranks are already assigned to all the instances that have been passed into this template, this for loop will loop over all the instances {% endcomment %}
+                {% for store in stores_ranked_b %}
+                <tr>
+                    <td>{{store.rank_b}}</td>
+                    <td>{{store.store_name}}</td>
+                    <td>{{store.budget}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+
+        <div class="rank_p">
+            <h2>Top 100 in Profit</h2>
+            <p>Stores are ranked on the basis of profit, the higher the profit the better rank</p>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>StoreName</th>
+                    <th>Profit</th>
+                </tr>
+                {% comment %} ranks are already assigned to all the instances that have been passed into this template, this for loop will loop over all the instances {% endcomment %}
+                {% for store in stores_ranked_p %}
+                <tr>
+                    <td>{{store.rank_p}}</td>
+                    <td>{{store.store_name}}</td>
+                    <td>{{store.profit}}</td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </main>
+
+{% endblock %}

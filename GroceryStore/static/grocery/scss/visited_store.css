@@ -1,0 +1,56 @@
+header .review_box {
+  display: none;
+}
+
+main .product_table_container {
+  display: flex;
+  justify-content: center;
+  font-family: sans-serif;
+}
+main .product_table_container .product_table {
+  border: 2px solid black;
+  width: 70%;
+  height: auto;
+  text-align: center;
+  font-family: sans-serif;
+}
+main .product_table_container .product_table .product_tr {
+  display: table-row;
+  display: flex;
+  padding: 10px;
+  justify-content: space-around;
+  text-align: center;
+}
+main .product_table_container .product_table .product_tr .product_th {
+  font-weight: bold;
+  display: table-cell;
+  vertical-align: middle;
+}
+main .product_table_container .product_table .product_tr_row {
+  display: table-row;
+  display: flex;
+  padding: 15px;
+  justify-content: space-around;
+  text-align: center;
+  position: relative; /* To make the row the containing block for the button */
+}
+main .product_table_container .product_table .product_tr_row .buy_button_row {
+  position: absolute;
+  top: 50%; /* Center vertically */
+  left: 50%; /* Center horizontally */
+  transform: translate(-50%, -50%); /* Adjust for the button's size */
+  width: 100%;
+  height: 30px;
+  z-index: 1;
+  display: none;
+}
+main .product_table_container .product_table .product_tr_row .buy_button_row .buy_button_toggle {
+  width: 80px;
+}
+main .product_table_container .product_table .product_tr_row .buy_button_row .product_td {
+  display: table-cell;
+  vertical-align: middle;
+}
+main .product_table_container .product_table .buying_row {
+  display: none;
+}/*# sourceMappingURL=visited_store.css.map */

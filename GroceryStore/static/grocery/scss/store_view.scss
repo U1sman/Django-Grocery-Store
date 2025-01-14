@@ -1,0 +1,125 @@
+.add_menu{
+    display: none;
+}
+
+
+main{
+
+    .heading2{
+        
+    }
+
+    // Should probably make this table responsive and stuff but i dont care at the moment
+    .product_table_container{
+        display: flex;
+        justify-content: center;
+        font-family: sans-serif;
+        
+
+        .product_table{
+            border: 2px solid black;
+            width: 70%;
+            height: auto;
+            text-align: center;
+            font-family: sans-serif;
+
+            .product_tr{
+                display: table-row;
+                display: flex;
+                padding:10px;
+                justify-content: space-around;
+                text-align: center;
+
+                .product_th{
+                    font-weight: bold;
+                    display: table-cell;
+                    vertical-align: middle;
+                }
+                
+            }
+            .product_tr_row{
+                display: table-row;
+                display: flex;
+                justify-content: center;
+                padding:15px;
+                justify-content: space-around;
+                text-align: center;
+                position: relative; /* To make the row the containing block for the button */
+
+                .edit_button_row{
+                    position: absolute;
+                    top: 50%; /* Center vertically */
+                    left: 50%; /* Center horizontally */
+                    transform: translate(-50%, -50%); /* Adjust for the button's size */
+                    width: 100%;
+                    height: 30px;
+                    z-index: 1;
+                    display: none;
+
+                    .edit_button{
+
+                        width: 80px;
+                    }
+                
+                .product_td{
+                    display: table-cell;
+                    vertical-align: middle;
+                }
+                
+                }
+            }
+            .editing_row{
+                display: none;
+
+
+
+                .costprice_display_q{
+                    display: none;
+
+                }
+                .restock_submit{
+                    display: none;
+                    height: 30px;
+                    
+                }
+                .restock_btn{
+                    height: 30px;
+                }
+                .changeprice_btn{
+                    height: 30px;
+
+                }
+                .changeprice_submit{
+                    display: none;
+                    height: 30px;
+                }
+                .delete_btn{
+                    height: 30px;
+                }
+            }
+
+
+
+            
+        }
+    }
+}
+
+
+.quantity_field_increase{
+    display: none;
+}
+
+#quantity_td{
+    display: block;
+}
+
+.change_saleprice_field{
+    display: none;
+}
+#saleprice_td{
+    display: block;
+}
+
+
+

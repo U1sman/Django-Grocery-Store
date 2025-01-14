@@ -1,0 +1,26 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+
+{% block title_stylesheet %}
+<link rel="stylesheet" href="{% static 'grocery/scss/browse_stores.css' %}">
+{% endblock %}
+
+{% block body %}
+<header>
+    <h1>CHOOSE A STORE TO VISIT</h1>
+    <a href="{% url "choose_role" %}">Back to Roles</a>
+</header>
+<main>
+    <br>
+    <br>
+    <div class="select_store_container">
+        {% for store in all_stores %}
+            <a href="{% url "visited_store" store_id=store.id %}"><div class="store_card">{{store.store_name}}</div></a>
+        {% endfor %}
+    </div>
+</main>
+
+
+
+<script src="{% static "grocery/js/browse_stores.js" %}"></script>
+{% endblock %}
