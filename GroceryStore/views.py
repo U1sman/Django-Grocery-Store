@@ -24,6 +24,12 @@ def store_view(request):
     current_store = Store.objects.get(store_name=store_name)
     store_products = Product.objects.filter(store__store_name=store_name)
     items_all = Item.objects.all()
+    if check_bankrupt(request):
+        delete_store(request)
+        return render(request, "grocery/bankrupt_page.html", {
+            "store_name": store_name,
+        })
+
 
     if request.method == "POST":
         # gets the submit button clicked
@@ -377,4 +383,19 @@ def visited_store(request, store_id):
         "current_store": current_store,
         "store_products": store_products,
     })
+
+
+#EXTRAS
+
+def check_bankrupt(request):
+    current_user = request.user
+    store_name = current_user.username
+    current_store = Store.objects.get(store_name=store_name)
+    store_products = Product.objects.filter(store__store_name=store_name)
+    if current_store.budget < 20 and not store_products.exists():
+        return True
+    return False
+
+
+    
 

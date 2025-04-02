@@ -1,0 +1,18 @@
+{% extends "grocery/layout.html" %}
+{% load static %}
+
+{% block title_stylesheet %}
+
+<title>You Went Bankrupt</title>
+{% comment %} <link rel="stylesheet" href="{% static 'grocery/scss/store_view.css' %}">  {% endcomment %}
+
+{% endblock %}
+
+{% block body %}
+
+<h1>YOU WENT BANKRUPT!</h1>
+<h2>{{store_name}} has been deleted</h2>
+
+<a href="{% url "owner_login" %}" >Back to Login</a>
+
+{% endblock %}
